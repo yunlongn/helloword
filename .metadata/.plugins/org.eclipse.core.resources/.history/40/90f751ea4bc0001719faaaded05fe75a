@@ -1,0 +1,150 @@
+package Test;
+import java.awt.Graphics;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+public class Tank extends JPanel{
+
+	 int col;
+	 int row;
+	 int	v;
+	 int dir=38;
+	 String url3="img/enemy3U.gif";
+	 String url2="img/enemy2U.gif";
+	 String url1="img/enemy1U.gif";
+     String url= "img/p1tankU.gif";
+	int Lv=0;
+	int shotshu=4;
+	//定义坦克方向
+	private int direct = 0;//0:left;1:up; 2:right;3:down
+	//构造方法初始化
+	public Tank(int col, int row) {														//坦克速度
+		// TODO Auto-generated constructor stub
+		this.col = col;
+		this.row = row;
+		v=5;
+	}
+	void tankimg(Graphics  g){
+		super.paint(g);
+		if(this.Lv==0){
+			ImageIcon icon = new ImageIcon(this.url);
+			g.drawImage(icon.getImage(), this.getCol()*20, this.getRow()*20, 20, 20, this);
+		}if(this.Lv==1){
+			ImageIcon icon = new ImageIcon(this.url1);
+			g.drawImage(icon.getImage(), this.getCol()*20, this.getRow()*20, 20, 20, this);
+			shotshu=8;
+			v=7;
+		}if(this.Lv==2){
+			ImageIcon icon = new ImageIcon(this.url2);
+			g.drawImage(icon.getImage(), this.getCol()*20, this.getRow()*20, 20, 20, this);
+			shotshu=10;
+			v=8;System.out.println("000000000000000");
+		}
+		if(this.Lv==3){
+			ImageIcon icon = new ImageIcon(this.url3);
+			g.drawImage(icon.getImage(), this.getCol()*20, this.getRow()*20, 20, 20, this);
+			shotshu=100;
+			this.v=9;
+		}
+	}
+	public int getCol() {
+		return col;
+	}
+	public void setCol(int col) {
+		this.col = col;
+	}
+	public int getRow() {
+		return row;
+	}
+	public void setRow(int row) {
+		this.row = row;
+	}
+	public void shengji(){
+		System.out.println(Lv);
+			if(Lv<=2){
+				this.Lv+=1;
+			}
+		}
+	void move(int code,All all){
+		if (code == 37) {
+			moveL();
+			dir=37;
+		} else if (code == 38) {
+			moveU();
+			dir=38;
+		} else if (code == 39) {
+			moveR();
+			dir=39;
+		} else if (code == 40) {
+			moveD();
+			dir=40;
+		} else if (code == 32) {
+			if (all.ss.size() <= v) {
+				all.ShowFaShe(dir, col*20-5, row*20-5);
+			}
+		}
+		
+	}
+	
+	public void moveL() {
+		url = "img/p1tankL.gif";
+		url1 = "img/enemy1L.gif";
+		url2 = "img/enemy2L.gif";
+		url3 = "img/enemy3L.gif";
+		col--;
+		if(col<0){
+			col=23;
+		}
+	}
+	public void moveR() {
+		url1 = "img/enemy1R.gif";
+		url2 = "img/enemy2R.gif";
+		url3 = "img/enemy3R.gif";
+		url = "img/p1tankR.gif";
+		col++;
+		if(col>23){
+			col=0;
+		}
+	}
+	public void moveU() {
+
+		url1 = "img/enemy1U.gif";
+		url2 = "img/enemy2U.gif";
+		url3 = "img/enemy3U.gif";
+	   url = "img/p1tankU.gif";
+		row--;
+		if(row<0){
+			row=27;
+		}
+	}
+	public void moveD() {
+		url1 = "img/enemy1D.gif";
+		url2 = "img/enemy2D.gif";
+		url3 = "img/enemy3D.gif";
+		url = "img/p1tankD.gif";
+		row++;
+		if(row>27){
+			row=0;
+		}
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public int getDirect() {
+		return direct;
+	}
+
+	public void setDirect(int direct) {
+		this.direct = direct;
+	}
+	
+
+	
+}
+

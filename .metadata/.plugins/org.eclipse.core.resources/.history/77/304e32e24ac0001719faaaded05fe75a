@@ -1,0 +1,82 @@
+package main;
+
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class JPanelMain extends JPanel {
+	List<Dengpao> list ;
+	JButton btn;
+	int btnNum =1 ;
+	JPanelMain(){
+		list = new ArrayList<Dengpao>();
+		for(int i = 0 ; i < 50 ; i++){
+			Dengpao dp = new Dengpao();
+			list.add(dp);
+		}
+		btn = new JButton("确定");														//确定按钮的内容
+	btn.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		
+				
+				if(btnNum==1){
+					for(int j = 0 ; j < list.size() ; j++){
+						Dengpao ss = list.get(j);
+						ss.show = true;
+					}
+				}else{
+				for(int j = 0 ; j < list.size() ; j++){
+					Dengpao ss = list.get(j);
+				  int 	z=j+1;
+					if(z % btnNum == 0){
+						ss.show =!ss.show;
+					}
+				}
+				}
+				repaint();
+				btnNum++;
+		}
+	});
+		setLayout(new BorderLayout());
+		add(btn , BorderLayout.SOUTH);
+	}
+	
+	public void paint(Graphics g) {
+			for(int i = 0 ; i < list.size() ; i++){
+					Dengpao ss = list.get(i);
+					String img;
+					if(ss.show){
+						img = "img/on.jpg";
+					}else {
+						img = "img/off.jpg";
+					}
+					ImageIcon icon1 = new ImageIcon(img);
+					int x1 =   i%100 / 10;
+					int y1 = i%10 ;
+					g.drawImage(icon1.getImage(), y1*50, x1*50, 40,40, this);
+				}
+				
+
+	}
+	public class Dengpao{
+		boolean show=false;
+		String img=null;
+		Dengpao(){
+			if(show){
+			
+			}else {
+				img = "img/off.jpg";
+			}
+		}
+	}
+
+}

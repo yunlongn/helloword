@@ -1,0 +1,20 @@
+package xiaoniao;
+
+public class Mianjijisuan {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		final float PI=3.1415926927f;//定义常量
+		float perimeter,area;
+		float radius=Float.parseFloat(args[0]);
+		float angle=Float.parseFloat(args[1]);
+		area=PI*radius*radius*angle/360;
+		perimeter=PI*radius*angle/180+2*radius;
+		int perimeterInt=(int)perimeter;
+		System.out.println("扇形半径："+radius);
+		System.out.println("扇形角度："+angle);
+		System.out.println("扇形面积："+area);
+		System.out.println("扇形周长（只保留整数部分）："+perimeterInt);
+		}
+
+	}

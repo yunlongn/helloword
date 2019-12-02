@@ -1,0 +1,16 @@
+package main;
+
+import javax.swing.JFrame;
+
+public class JFrameMain extends JFrame {
+	JFrameMain(){
+	
+		JPanelMain jPanelMain = new JPanelMain();
+		add(jPanelMain);
+		setSize(550,350);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new JFrameMain();
+	}
+}

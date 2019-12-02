@@ -1,0 +1,57 @@
+package Test;
+import java.util.Vector;
+ 
+public class All extends Tank{ 									//子弹
+	Vector<FaShe> ss=new Vector<FaShe>();            //坦克连发    
+	public All(int x, int y) {
+		super(x, y);
+	}
+	FaShe fashe=null;
+	
+	void ShowFaShe(int Direct,int x,int y){
+			fashe=new FaShe(x, y,Direct);
+			ss.add(fashe);																//子弹添加
+		Thread t=new Thread(fashe);
+		t.start();
+	}
+	public class FaShe implements Runnable{
+		    public int x;
+			public int y;
+			public int v;
+			 String url ="img/enemymissile.gif" ;
+			 int size = 7;
+			 int  Direct=1;
+			 public boolean Testfashe=true;
+			 FaShe(int x,int y,int Direct){
+				 v=5;				//子弹速度
+				 this.x=x;
+				 this.y=y;
+				 this.Direct=Direct;
+			 } 
+		public void run() {
+			// TODO Auto-generated method stub
+			while (true) {
+				if(Direct== 37){
+					x-=v;
+				}else if(Direct == 38){
+					y-=v;
+				}else if(Direct == 39){
+					x+=v;
+				}else if(Direct== 40){
+					y+=v;
+				}
+				if(this.x<0||this.x>500||this.y<0||this.y>600){
+					Testfashe = false;
+	                break;
+	            }
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}	
+	}
+	}
+}

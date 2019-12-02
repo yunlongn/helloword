@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="将源文件夹“one/src”重命名为“one”&#x0D;&#x0A;－ 原始项目：“one”&#x0D;&#x0A;－ 原始元素：“one/src”&#x0D;&#x0A;－ 重命名的元素：“src”" description="重命名源文件夹“src”" id="org.eclipse.jdt.ui.rename.source.folder" input="/src" name="one" stamp="1476965084339" version="1.0"/>
+</session>

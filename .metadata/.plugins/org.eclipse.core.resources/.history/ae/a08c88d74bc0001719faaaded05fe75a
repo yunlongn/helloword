@@ -1,0 +1,110 @@
+package Test;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import BoomTest.Bricks;
+/*
+ * 总结：  如果一开始坦克不显示。先找是否有位置
+ * 用打印检测所有东西、如果还是没有；查看初始化是不是出了问题
+ * 看下tank2坦克的后缀有没有.gif
+ * */
+public class GamePanel extends JPanel implements KeyListener, Runnable{
+
+	Tank tank1 = new Tank(23,2);
+	Tank2 tank2 = new Tank2(3,4);
+	// 定义一个炮弹
+	int Direct = 1;
+	int Dir = 0;
+	ZhangAi zhangai = new ZhangAi();
+	All all = new All(tank1.getX(), tank1.getY());
+	Boom boom = new Boom(zhangai.getCol()*20, zhangai.getRow()*20);
+	JButton btn1=new JButton("单人模式");
+	public void paint(Graphics g) {
+		super.paint(g);
+		this.setBackground(Color.BLACK);
+			
+			ImageIcon icon1 = new ImageIcon("img/enemymissile.gif");
+			for (int i = 0; i < all.ss.size(); i++) { // 坦克连发
+				All.FaShe myzidan = all.ss.get(i);
+				if (myzidan.Testfashe == true) {
+					g.drawImage(icon1.getImage(), myzidan.x, myzidan.y, 10,10, this);
+				}
+				if (myzidan.Testfashe == false) {
+					all.ss.remove(myzidan);
+				}
+			}
+			icon1 = new ImageIcon("img/star.gif");
+			if (zhangai.isLive) {
+				g.drawImage(icon1.getImage(), zhangai.getCol()*20, zhangai.getRow()*20, 20, 20, this);
+			}
+		boom.show(g, this);
+		// 如果life为 0 酒吧炸弹从bombs向量去掉
+		tank1.tankimg(g);
+		tank2.tankimg(g);
+	}
+
+	
+	public void keyPressed(KeyEvent e) {
+		int code = e.getKeyCode();
+		tank1.move(code, all);
+		tank2.move(code, all);
+		// 刷新，调用paint方法
+		repaint();
+	}
+
+	public void keyReleased(KeyEvent e) {
+	}
+
+	public void keyTyped(KeyEvent e) {
+	}
+
+	public void run() {
+
+		while (true) {
+
+			// 如果炮弹没有创建，下面的代码不执行
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+			}
+			repaint();
+			
+			if (zhangai != null) {
+				for (int i = 0; i < all.ss.size(); i++) {
+					All.FaShe myShot = all.ss.get(i);
+					// 判断子弹是否有效
+					if (myShot != null) {
+						if (myShot.Testfashe) {
+							
+							if (zhangai.isLive) {
+								Bricks.hitTank(myShot, zhangai,boom);
+							}
+						}
+					}
+				}
+			}
+			if (zhangai.isLive) {
+				if ((tank1.getCol()*20== zhangai.getCol() *20&& tank1.getRow()*20 == zhangai.getRow()*20)) {
+					tank1.shengji();
+					zhangai.isLive = false; 
+				}
+			} else {
+				zhangai.setCol(new Random().nextInt(25));
+				zhangai.setRow(new Random().nextInt(25));
+				zhangai.isLive = true;
+
+			}
+		}
+	}
+}
